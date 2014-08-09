@@ -25,6 +25,7 @@ class Frontend_Widget_Editor {
 
 	function dynamic_sidebar( $widget ) {
 		if ( is_admin() ) return;
+		if ( ! current_user_can( 'edit_theme_options' ) ) return;
 
 		wp_enqueue_script( 'widget-editor', plugins_url( 'widget-editor.js', __FILE__ ), array('jquery'), 1, true );
 		wp_enqueue_style( 'widget-editor', plugins_url( 'widget-editor.css', __FILE__ ) );
