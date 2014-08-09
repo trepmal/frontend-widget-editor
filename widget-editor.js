@@ -3,7 +3,7 @@ jQuery(document).ready( function($) {
 	$('.widget-edit').on( 'click', function( ev ) {
 		ev.preventDefault();
 
-		$.post( '/wp-admin/admin-ajax.php', {
+		$.post( widgetEditor.ajaxUrl, {
 			action: 'fwe_widget_edit',
 			widget_id: $(this).attr('data-widget-id')
 		}, function( response ) {
@@ -31,10 +31,10 @@ jQuery(document).ready( function($) {
 
 		data += '&' + $.param(a);
 
-		$.post( '/wp-admin/admin-ajax.php', data, function( response ) {
+		$.post( widgetEditor.ajaxUrl, data, function( response ) {
 			if ( response ) {
 				form.closest('.widget-edit-wrapper').remove();
-				$.post( '/wp-admin/admin-ajax.php', {
+				$.post( widgetEditor.ajaxUrl, {
 					action: 'fwe_refresh_widget',
 					widget_id: widgetId,
 					sidebar_id: sidebarId

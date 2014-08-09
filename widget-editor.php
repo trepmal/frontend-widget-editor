@@ -18,17 +18,23 @@ $frontend_widget_editor = new Frontend_Widget_Editor;
 class Frontend_Widget_Editor {
 
 	function __construct() {
+		add_action( 'wp_enqueue_scripts',         array( $this, 'wp_enqueue_scripts' ) );
 		add_action( 'dynamic_sidebar',            array( $this, 'dynamic_sidebar' ) );
 		add_action( 'wp_ajax_fwe_widget_edit',    array( $this, 'widget_edit' ) );
 		add_action( 'wp_ajax_fwe_refresh_widget', array( $this, 'refresh_widget' ) );
 	}
 
+	function wp_enqueue_scripts() {
+		wp_enqueue_script( 'widget-editor', plugins_url( 'widget-editor.js', __FILE__ ), array('jquery'), 1, true );
+		wp_localize_script( 'widget-editor', 'widgetEditor', array(
+			'ajaxUrl' => admin_url('admin-ajax.php')
+		) );
+		wp_enqueue_style( 'widget-editor', plugins_url( 'widget-editor.css', __FILE__ ) );
+	}
+
 	function dynamic_sidebar( $widget ) {
 		if ( is_admin() ) return;
 		if ( ! current_user_can( 'edit_theme_options' ) ) return;
-
-		wp_enqueue_script( 'widget-editor', plugins_url( 'widget-editor.js', __FILE__ ), array('jquery'), 1, true );
-		wp_enqueue_style( 'widget-editor', plugins_url( 'widget-editor.css', __FILE__ ) );
 
 		echo "<a href='#' class='widget-edit' data-widget-id='{$widget['id']}'>". __( 'Edit this', 'fwe' ) ."</a>";
 	}
