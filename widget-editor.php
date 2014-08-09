@@ -80,7 +80,13 @@ class Frontend_Widget_Editor {
 		$number = preg_replace( "#^{$id_base}-#", '', $widget_id );
 		$instances = get_option( $wp_registered_widgets[ $widget_id ]['callback'][0]->option_name );
 		$instance = $instances[ $number ];
-		the_widget( get_class( $wp_registered_widgets[ $widget_id ]['callback'][0] ), $instance, $wp_registered_sidebars[$sidebar_id] );
+
+		$id = $wp_registered_widgets[ $widget_id ]['callback'][0]->id;
+		$classname = $wp_registered_widgets[ $widget_id ]['callback'][0]->widget_options['classname'];
+		$sidebar = $wp_registered_sidebars[ $sidebar_id ];
+		$sidebar['before_widget'] = sprintf($sidebar['before_widget'], $id, $classname);
+
+		the_widget( get_class( $wp_registered_widgets[ $widget_id ]['callback'][0] ), $instance, $sidebar );
 		$html = ob_get_clean();
 		wp_send_json_success( $html );
 	}

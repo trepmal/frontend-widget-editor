@@ -39,7 +39,8 @@ jQuery(document).ready( function($) {
 					widget_id: widgetId,
 					sidebar_id: sidebarId
 				}, function( response ) {
-					$('#'+widgetId).html( response.data );
+					// console.log( response );
+					$('#'+widgetId).replaceWith( response.data );
 				}, 'json' );
 
 			}

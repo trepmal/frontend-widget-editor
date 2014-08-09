@@ -1,5 +1,6 @@
 .widget-edit-wrapper {
 	position: fixed;
+	z-index: 1000;
 	top: 0;
 	left: 0;
 	width: 100%;
@@ -24,6 +25,7 @@
 	width: 35px;
 	height: 35px;
 	font-size: 35px;
+	line-height: 35px;
 	text-align: center;
 	text-decoration: none;
 	text-shadow: 0 0 1px #000;
